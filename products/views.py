@@ -12,11 +12,6 @@ from .serializers            import MenuSerializer
 
 
 class MenuListViewSet(views.APIView):
-    
-    # @classmethod
-    # def get_extra_actions(cls):
-    #     return []
-    # @action(detail=True, methods=['get'])
     def get(self, request):
         menus = Menu.objects.prefetch_related('category_set', 'category_set__subcategory_set').all()
 
