@@ -11,7 +11,7 @@ from .models                 import Menu, Category, SubCategory, ProductGroup
 from .serializers            import MenuSerializer
 
 
-class MenuListViewSet(views.APIView):
+class MenuListViewSet(viewsets.ViewSet):
     def get(self, request):
         menus = Menu.objects.prefetch_related('category_set', 'category_set__subcategory_set').all()
 
