@@ -4,7 +4,7 @@ from django.http.response      import JsonResponse
 from django.views              import View
 from django.db.models          import Avg, Count, F
 from rest_framework.viewsets   import GenericViewSet
-from rest_framework.mixins     import RetrieveModelMixin
+from rest_framework.mixins     import RetrieveModelMixin, ListModelMixin
 from rest_framework.response   import Response
 from rest_framework.decorators import action
 
@@ -12,14 +12,14 @@ from .models                 import Menu, Category, SubCategory, ProductGroup
 from .serializers            import MenuSerializer
 
 
-class MenuListViewSet(RetrieveModelMixin, GenericViewSet):
+class MenuListViewSet(ListModelMixin, GenericViewSet):
     queryset = Menu.objects.prefetch_related('category_set', 'category_set__subcategory_set').all()       
-    serializer = MenuSerializer(queryset, many = True)
-    
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_queryset()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+    serializer_class = MenuSerializer
+        
+    # def list(self, request, *args, **kwargs):
+    #     instance = self.get_queryset()
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
 
 
 # class MenuListView(View):
