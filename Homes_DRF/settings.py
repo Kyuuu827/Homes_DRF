@@ -38,9 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # django-cors-headers
     'corsheaders',
+
+    # DRF
     'rest_framework',
     'knox',
+
+    # SWAGGER
+    'drf_spectacular',
+    
     'core',
     'products',
     'users',
@@ -127,11 +135,14 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+APPEND_SLASH = False
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         #'rest_flex_fields.filter.backends.FlexFieldsFilterBackend',
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 ##CORS
@@ -159,7 +170,12 @@ CORS_ALLOW_HEADERS = (
 'x-requested-with',
 )
 
-APPEND_SLASH = False
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Homes_DRF',
+    'DESCRIPTION': 'Django Rest Framework로 재구성한 Homes 프로젝트',
+    'CONTACT': {'name': '이찬규', 'email': 'lck0827@gmail.com'},
+    'VERSION': '1.0.0',
+}
 
 LOGGING = {
     'disable_existing_loggers': False,
