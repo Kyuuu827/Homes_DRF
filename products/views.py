@@ -8,6 +8,8 @@ from rest_framework.mixins     import RetrieveModelMixin, ListModelMixin
 from rest_framework.response   import Response
 from rest_framework.decorators import action
 
+from products.filters import ProductGroupsFilter
+
 from .models                 import Menu, Category, SubCategory, ProductGroup
 from .serializers            import MenuSerializer
 
@@ -15,6 +17,10 @@ from .serializers            import MenuSerializer
 class MenuListViewSet(ListModelMixin, GenericViewSet):
     queryset = Menu.objects.prefetch_related('category_set', 'category_set__subcategory_set').all()       
     serializer_class = MenuSerializer
+
+
+class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
+    filter_class = ProductGroupsFilter
 
 
 # class ProductGroupsView(View):
