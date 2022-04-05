@@ -1,3 +1,4 @@
+from django.forms import FloatField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.fields      import CharField
 
@@ -27,3 +28,13 @@ class MenuSerializer(CategorySerializer):
     class Meta:
         model = Menu
         fields = 'name', 'image_url', 'categories'
+
+class ProductGroupsSerializer(ModelSerializer):
+    name = CharField(max_length=50)
+    company = CharField(max_length=50)
+    displayed_price = FloatField()
+    image_url = CharField(source='ProductImage_set_image.url')
+
+    class Meta:
+        model = ProductGroup
+        fields = '__all__'
