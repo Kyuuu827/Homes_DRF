@@ -3,6 +3,7 @@ import json
 from django.http.response      import JsonResponse
 from django.views              import View
 from django.db.models          import Avg, Count, F
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets   import GenericViewSet
 from rest_framework.mixins     import RetrieveModelMixin, ListModelMixin
 from rest_framework.response   import Response
@@ -10,8 +11,8 @@ from rest_framework.decorators import action
 
 from products.filters import ProductGroupsFilter
 
-from .models                 import Menu, Category, SubCategory, ProductGroup
-from .serializers            import MenuSerializer
+from .models                 import Menu, ProductGroup
+from .serializers            import MenuSerializer, ProductGroupsSerializer
 
 
 class MenuListViewSet(ListModelMixin, GenericViewSet):
@@ -20,7 +21,10 @@ class MenuListViewSet(ListModelMixin, GenericViewSet):
 
 
 class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
+    queryset = ProductGroup.objects.all()
+    serializer_class = ProductGroupsSerializer
     filter_class = ProductGroupsFilter
+    filter_backends = (DjangoFilterBackend)
 
 
 # class ProductGroupsView(View):
