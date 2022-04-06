@@ -139,7 +139,7 @@ APPEND_SLASH = False
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
-        # 'rest_flex_fields.filter.backends.FlexFieldsFilterBackend',
+        #'rest_flex_fields.filter.backends.FlexFieldsFilterBackend',
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
