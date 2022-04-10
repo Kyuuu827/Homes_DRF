@@ -8,6 +8,7 @@ from rest_framework.viewsets   import GenericViewSet
 from rest_framework.mixins     import RetrieveModelMixin, ListModelMixin
 from rest_framework.response   import Response
 from rest_framework.decorators import action
+from products.defaultPagination import DefaultPagination
 
 from products.filters import ProductGroupsFilter
 
@@ -23,6 +24,7 @@ class MenuListViewSet(ListModelMixin, GenericViewSet):
 class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
     queryset = ProductGroup.objects.all()
     serializer_class = ProductGroupsSerializer
+    pagination_class = DefaultPagination
     filter_class = ProductGroupsFilter
     filter_backends = (DjangoFilterBackend)
 
