@@ -5,15 +5,15 @@ from django.views              import View
 from django.db.models          import Avg, Count, F
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets   import GenericViewSet
-from rest_framework.mixins     import RetrieveModelMixin, ListModelMixin
+from rest_framework.mixins     import ListModelMixin
 from rest_framework.response   import Response
 from rest_framework.decorators import action
 from products.defaultPagination import DefaultPagination
 
-from products.filters import ProductGroupsFilter
+from products.filters import ProductGroupFilter, ProductGroupsFilter
 
 from .models                 import Menu, ProductGroup
-from .serializers            import MenuSerializer, ProductGroupsSerializer
+from .serializers            import MenuSerializer, ProductGroupSerializer, ProductGroupsSerializer
 
 
 class MenuListViewSet(ListModelMixin, GenericViewSet):
@@ -26,6 +26,14 @@ class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
     serializer_class = ProductGroupsSerializer
     pagination_class = DefaultPagination
     filter_class = ProductGroupsFilter
+    filter_backends = (DjangoFilterBackend)
+
+
+class ProdcutGroupViewSet(ListModelMixin,GenericViewSet):
+    queryset = ProductGroup.objects.get(id=id)
+    serializer_class = ProductGroupSerializer
+    pagination_class = DefaultPagination
+    filter_class = ProductGroupFilter
     filter_backends = (DjangoFilterBackend)
 
 
