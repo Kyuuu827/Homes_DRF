@@ -1,6 +1,6 @@
 from django_filters import FilterSet, NumberFilter, OrderingFilter
 
-from products.models import ProductGroup
+from products.models import Product, ProductGroup
 
 
 class ProductGroupsFilter(FilterSet):
@@ -14,4 +14,11 @@ class ProductGroupsFilter(FilterSet):
 
     class Meta:
         model = ProductGroup
+        fields = ''
+
+
+class ProductGroupFilter(FilterSet):
+
+    class Meta:
+        model = Product
         fields = ''
