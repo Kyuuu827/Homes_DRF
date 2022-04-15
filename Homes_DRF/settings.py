@@ -42,13 +42,17 @@ INSTALLED_APPS = [
     # django-cors-headers
     'corsheaders',
 
+    #django-filters
+    'django_filters',
+
     # DRF
     'rest_framework',
     'knox',
 
     # SWAGGER
     'drf_spectacular',
-    
+
+    # APP
     'core',
     'products',
     'users',
