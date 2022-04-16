@@ -33,8 +33,15 @@ class ProductGroupsSerializer(ModelSerializer):
     name = CharField(max_length=50)
     company = CharField(max_length=50)
     displayed_price = FloatField()
-    image_url = CharField(source='ProductImage_set_image.url')
+    image_url = CharField(source='productimage_set')
 
+    class Meta:
+        model = ProductGroup
+        fields = '__all__'
+
+class ProductGroupSerializer(ModelSerializer):
+    name = CharField(max_length=50)
+    
     class Meta:
         model = ProductGroup
         fields = '__all__'
