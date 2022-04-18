@@ -1,8 +1,3 @@
-import json
-
-from django.http.response      import JsonResponse
-from django.views              import View
-from django.db.models          import Avg, Count, F
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets   import GenericViewSet
 from rest_framework.mixins     import ListModelMixin
@@ -26,11 +21,11 @@ class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
     serializer_class = ProductGroupsSerializer
     pagination_class = DefaultPagination
     filter_class = ProductGroupsFilter
-    filter_backends = (DjangoFilterBackend)
+    #filter_backends = (DjangoFilterBackend)
 
 
 class ProdcutGroupViewSet(ListModelMixin,GenericViewSet):
-    queryset = ProductGroup.objects.get(id=id)
+    queryset = ProductGroup.objects.all()
     serializer_class = ProductGroupSerializer
     pagination_class = DefaultPagination
     filter_class = ProductGroupFilter
