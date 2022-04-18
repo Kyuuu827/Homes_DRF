@@ -21,7 +21,7 @@ class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
     serializer_class = ProductGroupsSerializer
     pagination_class = DefaultPagination
     filter_class = ProductGroupsFilter
-    #filter_backends = (DjangoFilterBackend)
+    filter_backends = [DjangoFilterBackend]
 
 
 class ProdcutGroupViewSet(ListModelMixin,GenericViewSet):
@@ -29,7 +29,7 @@ class ProdcutGroupViewSet(ListModelMixin,GenericViewSet):
     serializer_class = ProductGroupSerializer
     pagination_class = DefaultPagination
     filter_class = ProductGroupFilter
-    filter_backends = (DjangoFilterBackend)
+    filter_backends = [DjangoFilterBackend]
 
 
 # class ProductGroupsView(View):
