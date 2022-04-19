@@ -4,12 +4,16 @@ from products.models import Product, ProductGroup
 
 
 class ProductGroupsFilter(FilterSet):
-    sub_category_id = NumberFilter(field_name='subcategory_id', lookup_expr='exact')
+    sub_category_id = NumberFilter(field_name='sub_category_id', lookup_expr='exact')
     order_by_field = 'ordering'
     ordering = OrderingFilter(
-        fields = (
-            'created_at'
-        )
+        fields = ([
+            'best_ranking', 
+            'review_count', 
+            'review_star_point', 
+            'discounted_price', 
+            'latest_update'
+        ])
     )
 
     class Meta:
