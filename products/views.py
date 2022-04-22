@@ -1,3 +1,4 @@
+from django.db.models              import Avg, F, Count
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets   import GenericViewSet
 from rest_framework.mixins     import ListModelMixin
@@ -23,8 +24,24 @@ class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
     filter_class = ProductGroupsFilter
     filter_backends = [DjangoFilterBackend]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        sub_category_id = self.request.query_params.get('sub_category_id', '')
 
-class ProdcutGroupViewSet(ListModelMixin,GenericViewSet):
+        if sub_category_id:
+            queryset.filter(sub_category_id = sub_category_id).annotate(
+                best_ranking      = Avg('review__star_rate'),
+                review_count      = Count('review'),
+                review_star_point = Avg('review__star_rate'),
+                discounted_price  = F('displayed_price') - F('displayed_price') * (F('discount_rate')/100),
+                latest_update     = F('created_at')
+                )
+        
+        return queryset
+
+
+class ProductGroupViewSet(ListModelMixin,GenericViewSet):
     queryset = ProductGroup.objects.all()
     serializer_class = ProductGroupSerializer
     pagination_class = DefaultPagination
