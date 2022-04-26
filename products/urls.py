@@ -10,6 +10,6 @@ router.register(r'', views.ProductGroupsViewSet, basename = 'ProductGroups')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('<int:id>', include(router.urls))
+    path('<int:id>', views.ProductGroupViewSet.as_view)
 	#path('menus', views.MenuListViewSet.as_view({'get':'list'}), name = 'menu-list'), 
 ]
