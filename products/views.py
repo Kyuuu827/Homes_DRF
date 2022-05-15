@@ -2,7 +2,6 @@ from django.db.models              import Avg, F, Count
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets   import GenericViewSet
 from rest_framework.mixins     import ListModelMixin
-from rest_framework.response   import Response
 from products.defaultPagination import DefaultPagination
 
 from products.filters import ProductGroupFilter, ProductGroupsFilter
