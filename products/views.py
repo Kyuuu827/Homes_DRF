@@ -1,17 +1,17 @@
-from django.db.models              import Avg, F, Count
+from django.db.models import Avg, F, Count
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.viewsets   import GenericViewSet
-from rest_framework.mixins     import ListModelMixin
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import ListModelMixin
 from products.defaultPagination import DefaultPagination
 
 from products.filters import ProductGroupFilter, ProductGroupsFilter
 
-from .models                 import Menu, ProductGroup
-from .serializers            import MenuSerializer, ProductGroupSerializer, ProductGroupsSerializer
+from .models import Menu, ProductGroup
+from .serializers import MenuSerializer, ProductGroupSerializer, ProductGroupsSerializer
 
 
 class MenuListViewSet(ListModelMixin, GenericViewSet):
-    queryset = Menu.objects.prefetch_related('category_set', 'category_set__subcategory_set').all()       
+    queryset = Menu.objects.prefetch_related('category_set', 'category_set__subcategory_set').all()
     serializer_class = MenuSerializer
 
 
@@ -24,28 +24,27 @@ class ProductGroupsViewSet(ListModelMixin, GenericViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
+
         sub_category_id = self.request.query_params.get('sub_category_id', '')
 
         if sub_category_id:
-            queryset.filter(sub_category_id = sub_category_id).annotate(
-                best_ranking      = Avg('review__star_rate'),
-                review_count      = Count('review'),
-                review_star_point = Avg('review__star_rate'),
-                discounted_price  = F('displayed_price') - F('displayed_price') * (F('discount_rate')/100),
-                latest_update     = F('created_at')
-                )
-        
+            queryset.filter(sub_category_id=sub_category_id).annotate(
+                best_ranking=Avg('review__star_rate'),
+                review_count=Count('review'),
+                review_star_point=Avg('review__star_rate'),
+                discounted_price=F('displayed_price') - F('displayed_price') * (F('discount_rate') / 100),
+                latest_update=F('created_at')
+            )
+
         return queryset
 
 
-class ProductGroupViewSet(ListModelMixin,GenericViewSet):
+class ProductGroupViewSet(ListModelMixin, GenericViewSet):
     queryset = ProductGroup.objects.all()
     serializer_class = ProductGroupSerializer
     pagination_class = DefaultPagination
     filter_class = ProductGroupFilter
     filter_backends = [DjangoFilterBackend]
-
 
 # class ProductGroupsView(View):
 #     def get(self, request):
@@ -61,7 +60,7 @@ class ProductGroupViewSet(ListModelMixin,GenericViewSet):
 #             discounted_price  = F('displayed_price') - F('displayed_price') * (F('discount_rate')/100),
 #             latest_update     = F('created_at')
 #         ).order_by(ordering)[OFFSET:OFFSET+LIMIT]
-        
+
 #         results = [
 #             {
 #             'id'               : product_group.id,
@@ -110,6 +109,6 @@ class ProductGroupViewSet(ListModelMixin,GenericViewSet):
 #             }
 
 #             return JsonResponse({'product_group' : product_group}, status=200)
-        
+
 #         except ProductGroup.DoesNotExist:
 #             return JsonResponse({'message' : 'INVALID_PRODUCT'}, status=404)
